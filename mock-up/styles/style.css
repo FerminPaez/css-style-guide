@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+*{
+    font-family: 'Roboto', sans-serif;
+}
+.wrap{
+    margin-top:20px ;
+    width: 90%;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.images{
+    max-width: 100%;
+    vertical-align: middle;
+    margin: auto;
+  }
+
+.container{
+    margin-top: 40px!important;
+    display: grid;
+    width: 90%;
+    grid-template-columns: 40% 60%;
+    margin: auto;
+    padding: 12px;
+    z-index: 10;
+    position: absolut;
+}
+
+
+.grayscale{
+    filter: grayscale(100%);
+    transition: all 1s ease;
+}
+
+.grayscale:hover{
+    filter: grayscale(0%)
+}
+
+.wrap > article{
+    border: 1px rgba(0, 0, 0, 0);
+    transition: all .7s ease;
+    margin: 20px;
+}
+
+.wrap > article:hover{
+    margin: 20px;
+    border: 1px rgba(0, 0, 0, 1);
+}
+
+h1{
+    margin-left: 20px;
+}
+
+section{
+    margin-top: 20px;
+    margin-left: 10px;
+    font-size: 18px;    
+}
+
+span{
+    font-weight: bold;
+}
+
+
+article > header{
+    
+    width: 26%;
+    background-color: rgba(0, 0, 0, 0);
+    position: absolute;    
+    color: rgba(0, 0, 0, 0);
+    transition: all .7s ease;
+    padding: 10px;
+    z-index: 10;
+}
+
+article:hover > header{
+    
+    width: 26%;
+    background-color: rgba(0, 0, 0, .1);
+    color: rgba(0, 0, 0, 1);
+    position: absolute;
+    z-index: 10;
+}
+
+a{
+    font-weight: bolder;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0);
+    transition: all .7s ease;
+}
+
+article:hover > header > a{
+    font-weight: bolder;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 1);
+}
+
+
+
+  
+@media screen and (max-width: 870px) {
+
+    .container{
+        margin-top: 40px!important;
+        display: grid;
+        width: 90%;
+        grid-template-columns: 100%;
+        margin: auto;
+        padding: 12px;
+        z-index: 10;
+        position: relative;
+    }
+
+    .wrap{
+        margin-top:20px ;
+        width: 90%;
+        display: grid;
+        grid-template-columns: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .images{
+        width: 80vw;
+        vertical-align: middle;
+        margin: auto;
+    }
+
+    article > header{
+        margin: auto;
+        background-color: rgba(0, 0, 0, 0);
+        color: rgba(0, 0, 0, 0);
+        transition: all .7s ease;
+        padding: 10px;
+        z-index: 10;
+    }
+    
+    article:hover > header{
+        margin: auto; 
+        width: 80vw;
+        background-color: rgba(0, 0, 0, .1);
+        color: rgba(0, 0, 0, 1);
+        z-index: 10;
+    }
+}

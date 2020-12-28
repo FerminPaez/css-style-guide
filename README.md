@@ -1,264 +1,133 @@
-.CSS Style Guide {
-==================
-
-*A mostly reasonable approach to CSS*
-*Based on the excellent work done by Richard Powell [here](https://github.com/byrichardpowell/CSS-Style)*
-
-## General
-
-### Minimise the use of element selectors
-
-Selectors that contain elements tightly coupled the CSS to specific markup. It is not a safe assumption that the semantics of the content will never change so authors should prefer classes which exist independent of markup and create more flexible CSS.
-
-Source: [SMACSS on modules](http://smacss.com/book/type-module)
-
-### Do not use location based selectors
-
-A location based selector is a selector that changes a modules appearance based on its location (content area, side bar, header etc).  Where a module has different appearances it is better to use a module subclass.  If the appearance and/or content is very different it would be better to use a different module
-
-Source: [OOCSS, slide 20](http://www.slideshare.net/stubbornella/object-oriented-css)
-
-### Do not use ID's in CSS Selectors
-
-It is never safe to assume there will only ever be one of something on a page so do not use ID's for CSS.  Id's are much better used as javascript hooks so use them for this instead.
-
-Source: [SMACSS on layout](http://smacss.com/book/type-layout)
-
-### Animate an interface using classes not inline styles
-
-Inline styles added by javascript are harder to update and maintain, prefer to add classes using javascript.  CSS3 transitions can then handle any animations and if CSS3 transitions are not supported the state will still be updated.
-
-Source: [SMACSS on state](http://smacss.com/book/type-state)
-
-### Selectors should be 4 or less levels deep
-
-Long complex selector chains spawn specificity wars and are slower for the browser to evaluate.  Its unlikely you _need_ to use a selector more than 4 levels deep.  If it is, consider adding additional classes to the markup to enable a shorter  selector length.
-
-### Don't use a Preprocessor to produce bloated CSS
-
-Utilise a preprocessors features such as mixins, variables, nested rules and functions to make code easier to maintain but always double check compiled stylesheets to avoid code bloat.  Preprocessors, when used inefficiently, can cause code bloat.
-
-Source: [SMACSS on preprocessors (members only)](https://smacss.com/book/preprocessors)
-
-### Minimise HTTP requests
-
-HTTP Requests are expensive and slow the rendering of a page, so minimise them. Ideally a HTML page should contain just one CSS file with extra CSS being loaded as the page changes.
-
-### Always Minimise CSS
-
-Minifying code can save up to 60% on a files size.  Use a tool like [YUI Compressor](http://yui.github.io/yuicompressor/) or [Grunt CSS Min](https://github.com/gruntjs/grunt-contrib-cssmin) together with build tools such as [Grunt](gruntjs.com) or [Maven](maven.apache.org/) to manage this and it's easy-peasy.
-
-Source: [Google Page Speed on Minifying CSS](https://developers.google.com/speed/docs/best-practices/payload#MinifyCSS)
-
-### Always use a CSS Linter
-
-Using a CSS Linter will make obvious whenever a rule is not matching the coding standard and best practices. It will make developers know something is wrong even before looking at it in the browser.
-When using Sublime Text a great solution is to use [SublimeLinter](https://github.com/SublimeLinter/SublimeLinter), there are other options for other IDEs and it can also be used online via http://csslint.net/
-
-### Never Use Single line formatting
-
-CSS Architecture is more difficult to do well than it is difficult to understand CSS Properties. Reading long lines of CSS code makes it difficult to understand the properties of the rule. This, together with the correct ordering of the CSS properties make it really easy to understand a rule as first sight.
-
-Source: [SMACSS on formatting](https://smacss.com/book/formatting)
-
-### Use dashes to separate words
-
-CSS properties do not use underscores or camel case, they use dashes.  Do the same with classes
-
-## Coding Style
-
-### General coding guidelines
-
-* Use soft-tabs with a two space indent.
-* Put spaces after `:` in property declarations.
-* Put spaces before `{` in rule declarations.
-* Use hex color codes #000 unless using rgba.
-
-Syntax example:
-
-```css
-.styleguide-format {
-  border: 1px solid #0F0;
-  color: #000;
-  background: rgba(0,0,0,0.5);
-}
-```
-
-### Multiple selectors should each be on a single line
-
-```css
-.my-class,
-.our-class,
-.your-class {
-  border: 1px solid #0F0;
-}
-```
-
-### Each property should be on a new line
-
-```css
-/* BAD */
-.my-class { border: 1px solid #0F0; color: #F00; margin-top: 20px; }
-
-/* GOOD */
-.my-class {
-  border: 1px solid #0F0;
-  color: #F00;
-  margin-top: 20px;
-}
-```
-### Use hyphens to concatenate class names
-
-E.g. `.demo-image` not `.demoImage` or `.demo_image`
-
-### Use a semicolon after every declaration
-```css
-/* BAD */
-.my-class {
-  border: 1px solid #0F0;
-  color: #F00
-}
-
-/* GOOD */
-.my-class {
-  border: 1px solid #0F0;
-  color: #F00;
-}
-```
-
-## Cross Browser
-
-### Use browser prefixes correctly & Painlessly
-
-When using prefixed properties ensure that Microsoft, Opera, Webkit and Mozilla prefixes are supported and that the non prefixed version is too.  Make this less painful by abstracting it away into a preprocessor mixin.
-
-### Use Conditional classes for Internet Explorer
-
-Aim to avoid separate styles for internet explorer, but where unavoidable do not use conditional stylesheets or CSS hacks to target specific versions of IE. Instead use conditional classes as explained by Paul Irish.
-
-Source: [Conditional stylesheets vs CSS hacks…](http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/)
-
-### Group IE Conditional styling with the code they alter
-
-Aim to avoid separate styles for internet explorer, but where unavoidable place the "fixes" next to the style it effects.  Not doing so makes it easy to miss when updating to changing the original styles
-
-### Normalise Don't Reset
-
-A global reset is a convenient way of ensuring consistent styling cross browser but it is often overkill and it makes CSS harder to debug in developer tools.
-
-Source: [Normalise.css](http://necolas.github.com/normalize.css/)
-
-### Don't be over-zealous when normalising
-
-When normalising it is important to not add styles to elements that then need to be overridden in future modules.  Tables and form elements are great examples of this.
-
-Source: [SMACSS on drop the base](http://smacss.com/book/drop-the-base)
-
-## Architecture
-
-### Split CSS into Normalise, Layout, Module & Icon files
-
-Splitting CSS into multiple files in a constant way makes it easier to find the CSS you are looking for.
-
-### Keep CSS files under 500 lines of code
-
-It sucks to have to search through 1000+ lines of code, so avoid it.  This rule may mean having to split the CSS module file into multiple files. When doing this make sure to only serve one file to the user.
-
-### Order properties: box, border, background, text & other
-
-Always order your properties grouping by categories. Box properties (Position, layout, display), box borders, background properties, text properties (font size, family, weight, etc), and so on.
-
-Source: [SMACSS on formatting](https://smacss.com/book/formatting)
-
-## Layout
-
-### Separate Layout and Module rules
-
-A Module defines the appearance and positing of its elements, nothing else.  If a module were to define a specific width then it would not be flexible enough to be included in multiple locations of different dimensions.
-
-Source: [SMACSS on layout](http://smacss.com/book/type-layout)
-
-## Modules
-
-### A Module should have flexible dimensions
-
-If a module needs to be contained do so using another class or a wrapper.  Modules need to be flexible, forcing their dimensions is not being flexible.
-
-### Comment a module thoroughly
-
-At the start of a module a comment should provide a picture of what content it contains, how that content looks and anything that is unusual about it.  Ideally it should also provide a link to an example of the module in a HTML file.
-
-### Ensure modules are self contained and reusable
-
-Friends don't let friends write modules that may bleed into other modules or can only be used in a limited number of places.    Time spent upfront avoiding these two problems will save that time 10 fold later in the project.
-
-### Module names should be self explanatory but short
-
-It should be possible to look at a modules class and instantly have an idea what that module represents.  Do not provide a detailed description in the class name, just an overview.  A detailed description belongs in a comment at the top of the module CSS.
-
-### Module Specific Classes should be module name prefixed
-
-Adding the modules name to the start of all its classes ensures that if a module sits inside another module, the parent's styles will not bleed into the child's styles.  It also makes scanning the HTML easier as it is immediately clear which classes belong to which modules.
-
-### Use a nested selector to group module rules
-
-Preprocessors provide an opportunity to make it crystal clear where a modules rules start and end.  Use that opportunity but be sure not to nest nested selectors inside other nested selectors.  This would produce large selector chains, which are a bad idea.
-
-### Split Modules into default, state, & subclass groups
-
-Consistently architecting modules in this way makes it easy to scan the module and get a good overview of it.  Being inconsistent is likely to lead to mistakes and oversights when the module is edited at a later date.
-
-### Subclass a module to create different versions of it
-
-A module subclass will make changes to a module that might be major in appearance but should be minor in terms of the amount of styles it is changing.  A module subclass should not be used if the module subclass would need to overuse many styles and make it unrecognisable from its module.  If a module is subclassed its wrapper will need the class for the module and for the subclass of that module.
-
-Source: [SMACSS on modules](http://smacss.com/book/type-module)
-
-### Module Subclass class names should be: module--subclass
-
-The double dash makes it clear that this class represents a subclass and which module the subclass is affecting.  The wrapper for this module will need the module class and the subclass module.
-
-### State classes should be prefixed with is
-
-A state class ( e.g: .is-active, .is-empty ) is similar to a pseudo class in that it updates the appearance of an element.  Where it differs is that a state class will be added by javascript or the app when the page loads.  Adding is- to the start of the class clearly indicates that this module has been affected by a state class.
-
-Source: [SMACSS on state](http://smacss.com/book/type-state)
-
-### Only State classes may use !important
-
-!important should be avoided as much as possible, as such state classes are the only acceptable use of important.  Even so !important should not be the go to solution as its akin to using a grenade when careful diplomacy would suffice.
-
-Source: [SMACSS on state](http://smacss.com/book/type-state)
-
-### Icons do not belong in modules
-
-By styling icons independently of the module where it was first used you are making an icon that can be used in future modules without the need for duplication of code.
-
-### Remove overly similar modules
-
-If two modules are very similar with only barely noticeable changes to stuff like the shadow, padding and colours combine them into one.  The user will never know the difference and chances are this is a mistake introduced before the development stage.
-
-Source: [OOCSS, slide 39](http://www.slideshare.net/stubbornella/object-oriented-css)
-
-## Icons
-
-### Split icon styles into ico, ico-size & ico-img classes
-
-Specifying that something is an icon, its size and its image separately allows for maximum flexibility and minimal code repetition
-
-Source: [SMACSS on Icons](http://smacss.com/book/icon-module)
-
-### Optimise icon images into sprites late in the project
-
-Sprite images are an important way to reduce HTTP requests but they can be cumbersome to manage when an interface is in its infancy.  Do not over optimise too early. Wait until the project is ready to deploy and make time for sprite sheet optimisation then.
-
-### Sprited Icons should be added to empty elements
-
-If you add a sprite image to the background of an element that has text what happens when that element receives more text and expands?  It will happen and you'll feel silly, so avoid the pain and add icons to empty elements even though that means more markup.
-
-Adding icons to elements that have their text hidden out of bounds is also a good approach.
-
-Source: [SMACSS on Icons](http://smacss.com/book/icon-module)
-
-}
-=
+# Basics of HTML and CSS
+
+##1. HTML
+
+For an introduction to HTML please see [WebPlatform](http://docs.webplatform.org/wiki/html/tutorials).
+
+W3C's HTML5 specification can be found here: [http://www.w3.org/TR/html5/](http://www.w3.org/TR/html5/)
+
+Through the rest of this section you will create a basic HTML document. After finishing this section you will: 
+
+* be able to create HTML documents that displays text, images, tables, lists
+* understand how to structure HTML documents, and what the basic building blocks are
+* understand best practices to write valid, accessible, and semantic HTML markup.
+
+###Exercises
+
+1. **The Basics of HTML:** 
+	1. Create a basic `.html` file with a header displaying "Hello World".
+	2. Change the `header` to "My todo list".
+	3. Add a `list` of "todo items" for your daily chores.
+	4. Create another `.html` file. Create a table for your expenses.
+	5. Create another `.html` file. Add an image, a video, and a sound.
+		* You may find this book useful: [http://diveintohtml5.info/](http://diveintohtml5.info/)		
+	6. Create a "sign up" form with fields for: first name, last name, email, birthday, a dropdown to choose your favourite sport, and a text-area to include a small bio for the user. Add a button at the end to submit the form, and another one to clear the form. Add relevant validation rules for all fields (like required fields, valid email).
+	7. Test your HTML files in at least Firefox, Chrome, IE, and Chrome for Android or iOS Safari.
+2. **Doctypes & Metatags:** 
+	1. Learn how to write valid, and semantic markup:
+		* [HTML Validation](https://docs.webplatform.org/wiki/guides/html_validation)
+		* [WHAT DOES IT ALL MEAN?](http://diveintohtml5.info/semantics.html)
+	2. Add `doctype` to the previously created HTML documents. See what happens if you remove it.
+	3. Add metatags to the document.
+	4. Add the [meta viewport tag](http://www.quirksmode.org/mobile/metaviewport/). Check what happens in a mobile browser with or without it.
+	4. Validate your markup: [W3C Validator](http://validator.w3.org/)
+	5. Finally, check out [The HTML5 Boilerplate](https://github.com/h5bp/html5-boilerplate), to see a best-practice HTML document.
+3. **Accessibility** 
+	* Understand **why** accessibility is important:
+		* [W3C Accessibility](http://www.w3.org/standards/webdesign/accessibility)
+	* Understand **how** to make web document accessible:
+		* [508 checklist](http://webaim.org/standards/508/checklist)
+		* [BBC Accessibility Guideline](http://www.bbc.co.uk/guidelines/futuremedia/accessibility/html/).
+		* [Leverage HTML5 features to improve accessibility](http://www.w3.org/Talks/2014/0317-HTML5-A11Y/)
+		* [Accessibility: The Missing Ingredient](http://alistapart.com/article/accessibility-the-missing-ingredient)
+	* **Validate** your markup to see if it is accessible:
+		* Install a screen reader like [ChromeVox](https://chrome.google.com/webstore/detail/chromevox/kgejglhpjiefppelpmljglcjbhoiplfn?hl=en), and test your HTML document.
+		* Install [Accessibility Developer Tools](https://chrome.google.com/webstore/detail/accessibility-developer-t/fpkknkljclfencbdbgkenhalefipecmb?hl=en), and perform an audit on your markup.
+
+By now, you should have several `html` files with different examples of how to create lists, tables, add images, headers, etc. All the markup is syntactically valid, is semantic, passes the HTML validator, and is accessible.
+
+## 2. CSS
+In this section you will learn how to use CSS to modify the look & feel, and the layout of HTML documents.
+
+For a short introduction to HTML & CSS please go to: [http://learn.shayhowe.com/html-css/](http://learn.shayhowe.com/html-css/)
+
+W3C's CSS specifications can be found [here](http://www.w3.org/TR/css-2010/).
+
+### 2.1 Basics
+
+Exercises
+
+1. Create a basic [index.html](https://raw.githubusercontent.com/h5bp/html5-boilerplate/master/src/index.html) file (example provided).
+2. Create an empty style.css file and link it to the index.html using [the link tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link#Examples).
+3. Learn why is a best-practice to use a `reset stylesheet` [here](http://meyerweb.com/eric/tools/css/reset/). Then include [normalize.css](http://necolas.github.io/normalize.css/) before linking your style.css.
+4. Add a basic page structure using HTML as depicted by the following picture:
+
+![alt text](images/html5-structure.png "HTML5 structure")
+
+### 2.2 Selectors and properties
+Learn how to create CSS rules.
+![alt text](images/anatomy-of-a-css-rule.gif "Anatomy of a CSS rule")
+
+* [Brief of CSS selectors](http://www.sitepoint.com/web-foundations/css-selectors/)
+* [CSS3 selectors sheet](http://www.w3.org/TR/css3-selectors/)
+* Play a little [game](http://flukeout.github.io/) to consolidate your knowledge
+* Bookmark the following list of properties for future reference [http://ref.openweb.io/CSS/](http://ref.openweb.io/CSS/)
+* Bookmark a reference of CSS Vocabulary [http://pumpula.net/p/apps/css-vocabulary/](http://pumpula.net/p/apps/css-vocabulary/)
+* 
+Exercises:
+    1. Add background to the header, footer, aside and nav.
+    2. Add a global font definition (at html element) with a value of 14px, using a font-family you like.
+    3. Center the header and footer text.
+
+### 2.3 Specificity
+Learn about CSS Specificity (basically how rules override one each others) [http://www.w3.org/TR/CSS21/cascade.html#specificity](http://www.w3.org/TR/CSS21/cascade.html#specificity)
+
+Exercises:
+
+1.	Experiment with specificity right now using CSS3 selectors [http://specificity.keegan.st/](http://specificity.keegan.st/)
+2. Now add the following classes to the document created in section 2.1:
+	* To &lt;header&gt;  add class .header
+    * To &lt;footer&gt;  add class .footer
+    * To &lt;section&gt;  add class .content
+    * To &lt;nav&gt;  add class  .navigation
+    * To &lt;aside&gt;  add class  .sidebar
+3. Using the new added classes figure out how to override:
+    * .header must have a font size of 46px
+    * .footer must have a font size of 10px
+    * .content must have a font size of 14px
+    * .navigation must have a font size of 12px
+    * .sidebar must have a font size of 10px
+4. If the class attribute finishes with **r (example header, footer)**, the background must be magenta.
+5. If the class attribute contains an **a (example nav)** but do NOT finish with r, the background must be blue.
+6. How could you add weight to the global font definition to win over the classes added by point 3?
+7. Imagine there is a declaration like class=”oh-no-inline-styles” style=”background:red” and you need to change the background to green without changing the inline style. How could you accomplish this?
+
+### 2.4 The Box Model
+* Learn about the Box Model (how the browser calculates boxes size): [http://www.w3.org/TR/CSS21/box.html](http://www.w3.org/TR/CSS21/box.html)
+* Experiment with the box-model here by changing width / margin / padding / box-sizing [http://dabblet.com/gist/2986528](http://dabblet.com/gist/2986528)
+* Learn how to alter the box model calculations: [box-sizing](http://quirksmode.org/css/user-interface/boxsizing.html)
+* More on [box-sizing](http://adamschwartz.co/magic-of-css/chapters/1-the-box/)
+* Use the playground provided above to change *box-sizing* and see the changes.
+
+### 2.5 Layout
+
+#### 2.5.1 The display property
+* Learn how to handle the display property (block, inline, inline-block, none) [http://learnlayout.com/display.html](http://learnlayout.com/display.html)
+* Read about the display property [here](http://adamschwartz.co/magic-of-css/chapters/2-layout/)
+
+Exercises
+
+1. Now modify your CSS to reach something similar to the initial layout asked.
+
+#### 2.5.2 Layout systems
+* Learn how to create your own layout system [Grid Systems](http://www.adamkaplan.me/grid/)
+* Learn how to float elements [CSS Floats](http://alistapart.com/article/css-floats-101)
+* Learn about [CSS units](http://alistapart.com/article/love-the-boring-bits-of-css)
+* Using your own layout system, implement an HTML page based on the following `mock-up` (only desktop).
+  ![alt text](images/example-layout.png)
+* If the user hovers one of the boxes, a new box must be shown. The new box must include text describing the section that box represents. In addition, it must be positioned at the top of the parent box, and must have a transparent background.
+	* Example: [http://codepen.io/mofeenster/full/qtkKy/](http://codepen.io/mofeenster/full/qtkKy/) 	
+	* To accomplish this [Learn about CSS position](http://learnlayout.com/position.html).
+
+### 2.6 Media queries
+* [Learn Media Queries](http://css-tricks.com/css-media-queries/) and adapt your previous exercises to work on mobile screens. Use the following design as guide [example](http://mediaqueri.es/ity/).

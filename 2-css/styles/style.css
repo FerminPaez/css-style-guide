@@ -1,0 +1,58 @@
+.header, .navigation, .content, .sidebar, .footer {
+    font-weight: bold;
+}
+.body{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.header {
+    background-color: magenta;
+    font-size: 46px;
+    width: 100%;
+}
+
+.navigation{
+    background-color: blue;
+    font-size: 12px;
+    width: 25%;
+    
+}
+
+.content{
+    background-color: aqua;
+    font-size: 14px;
+    width: 50%;
+}
+
+.sidebar{
+    background-color: magenta;
+    font-size: 10px;
+    width: 25%;
+}
+
+.footer{
+    background-color: magenta;
+    font-size: 10px;
+    height: 200px;
+}
+
+section header{
+    background-color: aliceblue;
+    display: flex;
+    height: 200px;
+}
+
+section article{
+    background-color: red;
+    display: flex;
+    height: 200px;
+}
+
+section footer{
+    background-color: aliceblue;
+    display: flex;
+    height: 200px;
+}

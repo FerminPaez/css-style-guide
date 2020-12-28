@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        form{
+            margin-left: 25%;
+            width: 50%;
+        }
+        input{
+            display: flex;
+            width: 100%;
+        }
+        
+        label{
+            display: flex;
+            margin-top: 5px;
+            width: 100%;
+        }
+        select{
+            width: 101%;
+        }
+        textarea{
+            width: 100%;
+        }
+        button{
+            width: 50px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form action="">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="name" required>
+        <label for="second_name">Second name</label>
+        <input type="text" name="second_name" id="second_name" placeholder="second name" required>
+        <label for="email">e-mail</label>
+        <input type="email" name="e-mail" id="e-mail" placeholder="e-mail" required> 
+        <label for="birthday">Birthday</label>
+        <input type="date" name="birthday" id="birthday" placeholder="birthday" required>
+        <label for="sport">Choose your favorite sport:</label>
+        <select name="sport" id="sport"required>
+            <option value="tenis">Tenis</option>
+            <option value="soccer">Soccer</option>
+            <option value="rugby">Rugby</option>
+            <option value="baseball">Baseball</option>
+        </select> 
+        <label for="description">description</label>
+        <textarea name="description" id="" cols="30" rows="10" placeholder="Enter a description of you" required></textarea>
+        <button type="submit">Send</button>
+        <button type="reset">Clear</button>
+    </form>
+</body>
+</html>
